@@ -1,0 +1,155 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="index.css">
+    <style>
+        * {
+            --headerFontSize: 2rem;
+            --headerPadding: 1rem;
+            --footerFontSize: 1.5rem;
+            --footerPadding: 1rem;
+            --mainHeight: calc(100vh - var(--headerFontSize) - (2 * var(--headerPadding)) - var(--footerFontSize) - (2 * var(--footerPadding)) - (2 * 12px));
+
+        }
+
+        header {
+            background-color: lightyellow;
+            font-size: var(--headerFontSize);
+            padding: var(--headerPadding);
+            text-align: center;
+        }
+
+        main {
+            background-color: lightskyblue;
+            font-size: 1.5rem;
+            text-align: center;
+            height: var(--mainHeight);
+            overflow-y: auto;
+        }
+
+        footer {
+            background-color: lightyellow;
+            font-size: var(--footerFontSize);
+            padding: var(--footerPadding);
+            text-align: center;
+        }
+        #ShoppingCart {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        #Products {
+            margin: 1rem;
+            height: calc(var(--mainHeight) - 40%);
+            overflow-y: scroll;
+        }
+        #Summary {
+            height: calc(var(--mainHeight) - 60%);
+            margin: 1rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+        }
+        #Summary div {
+            font-size: 1.8rem;
+            padding: 0.5rem;
+            margin: 0.5rem;
+            background-color: lightgreen;
+            border:slategray 1px solid;
+        }
+        .product {
+            font-size: 1.8rem;
+            display: flex;
+            padding: 0.5rem;
+            margin: 0.5rem;
+            background-color: lightgreen;
+            border:slategray 1px solid;
+        }
+
+        .product div {
+            width: calc(100% / 4);
+        }
+        
+    </style>
+</head>
+
+<body>
+    <header>
+        Shopping Cart 🛒
+    </header>
+    <main id="ShoppingCart">
+        <div id="Products"></div>
+        <div id="Summary"></div>
+    </main>
+    <footer>Course provided by Radical-Coder and finished by Nik Danilov</footer>
+    <script src="index.js"></script>
+    <script>
+        function roll(min, max, fractionDigits = 3) {
+            let r = Math.random() * (max - min) + min
+            return r.toFixed(fractionDigits)
+        }
+        let possibleProducts = ["🍇", "🍈", "🍉", "🍊", "🍋", "🍌", "🍍", "🥭", "🍎", "🍏", "🍐", "🍑",
+            "🍒", "🍓", "🥝", "🍅", "🥥", "🥑", "🍆", "🥔", "🥕", "🌽", "🌶", "🥒", "🥬", "🥦"]
+
+        let products = [...Array(5)].map((_, i) => {
+            return {
+                index: i,
+                title: possibleProducts[roll(0, possibleProducts.length, 0)],
+                price: roll(1, 10, 2),
+                weight: roll(6, 20, 2),
+                count: roll(1, 6, 0)
+            }
+        })
+        console.log(products)
+
+        // Calculate the cart total amount using .reduce
+        let amountTotal = products.reduce(function (accumulator, product) {
+            return accumulator + parseFloat(product.price) * product.count
+        }, 0).toFixed(2)
+        console.log("Total amount:" + amountTotal)
+
+        // Calculate the cart total weight using .reduce
+        let weightTotal = products.reduce(function(accumulator, product)
+        {
+            return accumulator + parseFloat(product.weight)
+        }, 0).toFixed(2)
+        console.log("Total weight:" + weightTotal)
+
+        // roll() for a random Tax Rate betweeb 5% and 9%
+        // rounding to the nearest 10th
+        let taxRate = roll(5, 9, 1)
+        console.log("Tax Rate:" + taxRate)
+        
+        // Apply that Tax Rate to the Cart Total
+        function applyTax(value, taxRate) {
+            return parseFloat(value) + taxRate / 100 * value
+        }
+
+        let afterTaxTotal = applyTax(amountTotal, taxRate).toFixed(2)
+        console.log("After Tax Total:" + afterTaxTotal)
+
+        let html = ''
+        let productsElement = document.getElementById("Products")
+        products.forEach(function (product) {
+            html += `<div class ="product">
+            <div>${product.title}</div>
+            <div>💲${product.price}</div>
+            <div>x${product.count}</div>
+            <div>${product.weight}oz</div>
+            </div>`
+        })
+        productsElement.innerHTML = html
+
+        html = ''
+        let summaryElement = document.getElementById("Summary")
+        html += `
+            <div>Total: 💲${amountTotal}</div>
+            <div>Tax Rate: ${taxRate}%</div>
+            <div>Total After Tax: 💲${afterTaxTotal}</div>
+            <div>Total Weight: ${weightTotal}oz</div>
+        `
+        summaryElement.innerHTML = html
+
+    </script>
+</body>

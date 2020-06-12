@@ -1,0 +1,45 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="index.css">
+    <style>
+        * {
+            --expenseSheetHeight: calc(var(--mainHeight) - 3.5rem )
+        }
+        #MonthlyExpenses {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .monthly-summary {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.5rem;
+        }
+        .day {
+            width: calc(100% / 3);
+            height: calc(var(--expenseSheetHeight) / 4);
+            border: 0.1rem solid black;
+            box-sizing: border-box;
+        }
+
+        .day:nth-of-type(even) {
+            background-color: lightyellow;
+        }
+
+        .expense {
+            color: red;
+            padding: 0.1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <header>Monthly Expense Sheet 📅</header>
+    <main id="MonthlyExpenses"></main>
+    <footer>Course by Radical-Coder and You!</footer>
+
+    <script src="index.js"></script>
+</body>
+
+</html>

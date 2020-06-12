@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Schedule</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="tasks.css">
+    <style>
+        * {
+            --weeklySummaryFontSize: 1.8rem;
+            --weeklySummaryPadding: 1.2rem;
+        }
+        .day {
+            display: block;
+            height: calc((
+                var(--mainHeight)
+                - var(--weeklySummaryFontSize)
+                - (2 * var(--weeklySummaryPadding)))
+                / 3
+            );
+        }
+
+        .day:nth-of-type(even) {
+            background-color: lightyellow;
+        }
+
+        .tasks {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        .weekly-summary {
+            font-size: var(--weeklySummaryFontSize);
+            padding: var(--weeklySummaryPadding);
+        }
+    </style>
+</head>
+<body>
+    <header>Weekly Schedule✅</header>
+    <main id="WeeklySchedule"></main>
+    <footer>Course provided by Radical-Coder and finished by Nik Danilov</footer>
+    <script src="index.js"></script>
+</body>
+</html>
